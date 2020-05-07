@@ -5,37 +5,46 @@
 
 <div class="Plan">
   <h1>{{ msg }}</h1>
+  <Dropdown></Dropdown>
+  <List></List>
+  {{loadedData}}
+  
     
-  <select name="wochentage" id="wochentage">
-    <option>Montag</option>
-    <option>Dienstag</option>
-    <option>Mittwoch</option>
-    <option>Donnerstag</option>
-    <option>Freitag</option>
-  </select>
-
-   <br>
-        <table>
-          <tr>Kategorie</tr>
-          <tr>Infos</tr>
-          <tr>Kosten</tr>
-          <tr>Tag</tr>
-          <tr>Downvotes</tr>
-          <tr>ID</tr>
-          <tr>Labels</tr>
-          <tr>Name</tr>
-          <tr>Upvotes</tr>
-        </table>
   
   
 </div>
 </template>
 
 <script>
+import Dropdown from '../components/Dropdown.vue'
+import List from '../components/List.vue'
+import axios from 'axios'
+
   export default {
     name: 'Plan',
+    components:{
+      Dropdown, List
+
+    },
     props: {
       msg: String
+    },
+    data: function() {
+      return {
+        loadedData: "no data loaded",
+
+      }
+    },
+    mounted() {
+      axios.get("http://localhost:3000/mensa/Di")
+      .then(response =>{
+        this.loadedData = response
+
+      })
+      .catch(err =>{
+        console.log(err)
+
+      })
     }
   }
 </script>
